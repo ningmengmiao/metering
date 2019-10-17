@@ -19,7 +19,7 @@ public class MyBatisConfig
     public SqlSessionFactoryBean sqlSessionFactoryBean(ApplicationContext applicationContext) throws IOException
     {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setTypeAliasesPackage("cn.bptop.metering.bojo");
+        sqlSessionFactoryBean.setTypeAliasesPackage("cn.bptop.metering.pojo");
         sqlSessionFactoryBean.setDataSource(dataSource);
         sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath*:mappers/*.xml"));
         return sqlSessionFactoryBean;

@@ -14,8 +14,6 @@ import com.dingtalk.api.response.OapiUserGetuserinfoResponse;
 import com.mysql.cj.x.json.JsonArray;
 import com.taobao.api.ApiException;
 
-import java.util.List;
-
 /**
  * 钉钉API
  * 获取令牌及用户信息
