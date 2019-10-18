@@ -12,7 +12,7 @@ import java.util.List;
 public interface MeteringMapper
 {
 
-    public List<Metering> findMetering(@Param(value = "name") String name, @Param(value = "statusCode") String[] statusCode);
+    public List<Metering> findMetering(@Param(value = "userId") String userId, @Param(value = "statusCode") String[] statusCode);
 
     public void updateTool(@Param(value = "newTool") String newTool, @Param(value = "id") String id);
 
@@ -22,5 +22,5 @@ public interface MeteringMapper
 
     public void updateStatus(@Param(value = "status") String status, @Param(value = "id") String id);
 
-    public void addTool(@Param(value = "tool") String tool, @Param(value = "date") String date, @Param(value = "name") String name);
+    public void addTool(@Param(value = "userId") String userId, @Param(value = "tool") String tool, @Param(value = "date") String date, @Param(value = "ddName") String ddName);
 }

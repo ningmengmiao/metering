@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Mapper
 public interface UserMapper
 {
-    public void addUser(@Param("id") String id, @Param("ddId") String ddId, @Param("name") String name);
+    public void addUser(@Param("userId") String userId, @Param("ddUserId") String ddUserId, @Param("ddName") String ddName);
 
-    public User findUser(@Param("name") String name);
+    public User findUser(@Param("ddName") String ddName);
 }

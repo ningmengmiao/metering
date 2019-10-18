@@ -2,17 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace = "cn.bptop.metering.dao.UserMapper">
 	<resultMap id = "BaseResultMap" type = "cn.bptop.metering.pojo.User">
-		<result column = "id" jdbcType = "INTEGER" property = "id"/>
-		<result column = "dd_userid" jdbcType = "VARCHAR" property = "ddId"/>
+		<result column = "id" jdbcType = "VARCHAR" property = "userId"/>
+		<result column = "dd_userid" jdbcType = "VARCHAR" property = "ddUserid"/>
 		<result column = "dd_name" jdbcType = "VARCHAR" property = "ddName"/>
 	</resultMap>
 	<insert id = "addUser">
 		INSERT INTO dd_user
-		VALUES (#{id}, #{ddId}, #{name})
+		VALUES (#{userId}, #{ddUserId}, #{ddName})
 	</insert>
 	<select id = "findUser" resultMap = "BaseResultMap">
 		SELECT *
 		FROM `dd_user`
-		WHERE dd_name = #{name}
+		WHERE dd_name = #{ddName}
 	</select>
 </mapper>

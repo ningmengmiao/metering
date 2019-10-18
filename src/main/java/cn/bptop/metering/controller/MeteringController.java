@@ -23,9 +23,9 @@ public class MeteringController
     //查询
     @RequestMapping("/findMetering")
     @ResponseBody
-    public String findMetering(String name, String[] statusCode)
+    public String findMetering(String userId, String[] statusCode)
     {
-        List<Metering> list = meteringMapper.findMetering(name, statusCode);
+        List<Metering> list = meteringMapper.findMetering(userId, statusCode);
         return getJson(list);
     }
 
@@ -55,8 +55,8 @@ public class MeteringController
     //    添加
     @RequestMapping("/addTool")
     @ResponseBody
-    public void addTool(String tool, String date, String name)
+    public void addTool(String userId, String tool, String date, String ddName)
     {
-        meteringMapper.addTool(tool, date, name);
+        meteringMapper.addTool(userId, tool, date, ddName);
     }
 }

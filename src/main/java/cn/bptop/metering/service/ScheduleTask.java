@@ -60,7 +60,7 @@ public class ScheduleTask
                 User user = userMapper.findUser(aList.getDdName());
                 meteringMapper.updateStatusCode("4", aList.getId().toString());
                 meteringService.updateStatus("4", aList.getId().toString());
-                sendCardMsg(user.getDdId(), "计量工具", "您的计量工具:  \n **" + aList.getmTool() + "**  \n 有效期至" + aList.getmValidity() +
+                sendCardMsg(user.getDdUserid(), "计量工具", "您的计量工具:  \n **" + aList.getmTool() + "**  \n 有效期至" + aList.getmValidity() +
                         "  \n 已过有效期，请停止使用！及时送检！");
             }
             else if (validity.before(date30) && aList.getmStatusCode() != 3)  //即将过期
@@ -84,12 +84,12 @@ public class ScheduleTask
             User user = userMapper.findUser(aList.getDdName());
             if (aList.getmStatusCode() == 3)
             {
-                sendCardMsg(user.getDdId(), "计量工具", "您的计量工具:  \n **" + aList.getmTool() + "**  \n 有效期至" + aList.getmValidity() +
+                sendCardMsg(user.getDdUserid(), "计量工具", "您的计量工具:  \n **" + aList.getmTool() + "**  \n 有效期至" + aList.getmValidity() +
                         "  \n 即将到期，请及时送检！");
             }
             else
             {
-                sendCardMsg(user.getDdId(), "计量工具", "您的计量工具:  \n **" + aList.getmTool() + "**  \n 有效期至" + aList.getmValidity() +
+                sendCardMsg(user.getDdUserid(), "计量工具", "您的计量工具:  \n **" + aList.getmTool() + "**  \n 有效期至" + aList.getmValidity() +
                         "  \n 已过有效期，请停止使用！及时送检！");
             }
         }

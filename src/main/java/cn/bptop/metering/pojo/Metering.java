@@ -3,6 +3,7 @@ package cn.bptop.metering.pojo;
 public class Metering
 {
     private Integer id;
+    private String userId;
     private String ddName;
     private String mTool;
     private String mValidity;
@@ -17,6 +18,16 @@ public class Metering
     public void setId(Integer id)
     {
         this.id = id;
+    }
+
+    public String getUserId()
+    {
+        return userId;
+    }
+
+    public void setUserId(String userId)
+    {
+        this.userId = userId;
     }
 
     public String getDdName()

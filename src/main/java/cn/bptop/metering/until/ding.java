@@ -33,26 +33,39 @@ public class ding
         return response.getAccessToken();
     }
 
-    public static User getUser(String authCode) throws ApiException
+    //企业内部免登
+    public static String getDdUserId(String authCode) throws ApiException
     {
-        User user = new User();
         DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/user/getuserinfo");
         OapiUserGetuserinfoRequest request = new OapiUserGetuserinfoRequest();
         request.setCode(authCode);
         request.setHttpMethod("GET");
         OapiUserGetuserinfoResponse response = client.execute(request, getAccess_token());
-        //
-        DingTalkClient _client = new DefaultDingTalkClient("https://oapi.dingtalk.com/user/get");
-        OapiUserGetRequest _request = new OapiUserGetRequest();
-        _request.setUserid(response.getUserid());
-        _request.setHttpMethod("GET");
-        OapiUserGetResponse _response = _client.execute(_request, getAccess_token());
-        user.setDdUserId(response.getUserid());
-        user.setDdName(_response.getName());
-        user.setId(_response.getJobnumber());
-        return user;
+        return response.getUserid();
     }
 
+    //获取钉钉用户详情
+    public static OapiUserGetResponse getDdUser(String userId) throws ApiException
+    {
+        DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/user/get");
+        OapiUserGetRequest request = new OapiUserGetRequest();
+        request.setUserid(userId);
+        request.setHttpMethod("GET");
+        OapiUserGetResponse response = client.execute(request, getAccess_token());
+        return response;
+    }
+
+    //返回User实体类
+    public static User getUser(String userId) throws ApiException
+    {
+        User user = new User();
+        OapiUserGetResponse response;
+        response = getDdUser(userId);
+        user.setDdUserid(response.getUserid());
+        user.setDdName(response.getName());
+        user.setUserId(response.getJobnumber());
+        return user;
+    }
     //发送钉钉消息
     public static OapiMessageCorpconversationAsyncsendV2Request getMsgRequest(String userid) throws ApiException
     {
@@ -60,11 +73,6 @@ public class ding
         request.setUseridList(userid);
         request.setAgentId(301470841L);
         request.setToAllUser(false);
-        //
-//        msg.setMsgtype("text");
-//        msg.setText(new OapiMessageCorpconversationAsyncsendV2Request.Text());
-//        msg.getText().setContent(text);
-//        request.setMsg(msg);
         return request;
     }
 

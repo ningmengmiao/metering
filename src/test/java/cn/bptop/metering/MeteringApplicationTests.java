@@ -22,7 +22,6 @@ import static cn.bptop.metering.until.ding.sendCardMsg;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Controller
 public class MeteringApplicationTests
 {
 

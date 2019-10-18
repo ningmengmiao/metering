@@ -3,6 +3,7 @@
 <mapper namespace = "cn.bptop.metering.dao.MeteringMapper">
 	<resultMap id = "BaseResultMap" type = "cn.bptop.metering.pojo.Metering">
 		<result column = "id" jdbcType = "INTEGER" property = "id"/>
+		<result column = "userId" jdbcType = "VARCHAR" property = "userId"/>
 		<result column = "dd_name" jdbcType = "VARCHAR" property = "ddName"/>
 		<result column = "m_tool" jdbcType = "VARCHAR" property = "mTool"/>
 		<result column = "m_validity" jdbcType = "TIME" property = "mValidity"/>
@@ -11,15 +12,15 @@
 	</resultMap>
 	<insert id = "addTool">
 		INSERT INTO metering
-		VALUES (DEFAULT, #{name}, #{tool}, #{date}, 1, '未过期')
+		VALUES (DEFAULT, #{userId}, #{ddName}, #{tool}, #{date}, 1, '未过期')
 	</insert>
 	<select id = "findMetering" resultMap = "BaseResultMap" parameterType = "string">
 		SELECT *
 		FROM `metering`
 		<where>
 			<choose>
-				<when test = "name!=null">
-					dd_name = #{name}
+				<when test = "userId!=null">
+					user_id = #{userId}
 				</when>
 				<when test = "statusCode!=null">
 					<foreach collection = "statusCode" item = "statusCode" open = "and m_status_code in (" close = ") "

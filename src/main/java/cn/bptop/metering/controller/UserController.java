@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import static cn.bptop.metering.until.Json.getJson;
+import static cn.bptop.metering.until.ding.getDdUserId;
 import static cn.bptop.metering.until.ding.getUser;
 
 @Controller
@@ -21,11 +22,7 @@ public class UserController
     @ResponseBody
     public String authCode(String authCode) throws ApiException
     {
-        User user = getUser(authCode);
-        if (userMapper.findUser(user.getId()) == null)
-        {
-            userMapper.addUser(user.getId(), user.getDdId(), user.getDdName());
-        }
+        User user = getUser(getDdUserId(authCode));
         return getJson(user);
     }
 }

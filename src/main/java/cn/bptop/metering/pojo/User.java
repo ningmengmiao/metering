@@ -2,28 +2,30 @@ package cn.bptop.metering.pojo;
 
 public class User
 {
-    private String id;
-    private String ddId;
+    private String userId;
+
+    private String ddUserid;
+
     private String ddName;
 
-    public String getId()
+    public String getUserId()
     {
-        return id;
+        return userId;
     }
 
-    public void setId(String id)
+    public void setUserId(String userId)
     {
-        this.id = id;
+        this.userId = userId;
     }
 
-    public String getDdId()
+    public String getDdUserid()
     {
-        return ddId;
+        return ddUserid;
     }
 
-    public void setDdUserId(String ddId)
+    public void setDdUserid(String ddUserid)
     {
-        this.ddId = ddId;
+        this.ddUserid = ddUserid;
     }
 
     public String getDdName()
