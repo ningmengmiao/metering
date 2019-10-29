@@ -2,81 +2,70 @@ package cn.bptop.metering.pojo;
 
 public class Metering
 {
-    private Integer id;
-    private String userId;
-    private String ddName;
-    private String mTool;
-    private String mValidity;
-    private Integer mStatusCode;
-    private String mStatus;
+    private Integer meteringId;
+    private String meteringName;
+    private String meteringModel;
+    private String meteringClassify;
+    private Integer meteringPeriod;
+    private String meteringRange;
 
-    public Integer getId()
+    public Integer getMeteringId()
     {
-        return id;
+        return meteringId;
     }
 
-    public void setId(Integer id)
+    public void setMeteringId(Integer meteringId)
     {
-        this.id = id;
+        this.meteringId = meteringId;
     }
 
-    public String getUserId()
+    public String getMeteringName()
     {
-        return userId;
+        return meteringName;
     }
 
-    public void setUserId(String userId)
+    public void setMeteringName(String meteringName)
     {
-        this.userId = userId;
+        this.meteringName = meteringName;
     }
 
-    public String getDdName()
+    public String getMeteringModel()
     {
-        return ddName;
+        return meteringModel;
     }
 
-    public void setDdName(String ddName)
+    public void setMeteringModel(String meteringModel)
     {
-        this.ddName = ddName;
+        this.meteringModel = meteringModel;
     }
 
-    public String getmTool()
+    public String getMeteringClassify()
     {
-        return mTool;
+        return meteringClassify;
     }
 
-    public void setmTool(String mTool)
+    public void setMeteringClassify(String meteringClassify)
     {
-        this.mTool = mTool;
+        this.meteringClassify = meteringClassify;
     }
 
-    public String getmValidity()
+    public Integer getMeteringPeriod()
     {
-        return mValidity;
+        return meteringPeriod;
     }
 
-    public void setmValidity(String mValidity)
+    public void setMeteringPeriod(Integer meteringPeriod)
     {
-        this.mValidity = mValidity;
+        this.meteringPeriod = meteringPeriod;
     }
 
-    public Integer getmStatusCode()
+    public String getMeteringRange()
     {
-        return mStatusCode;
+        return meteringRange;
     }
 
-    public void setmStatusCode(Integer mStatusCode)
+    public void setMeteringRange(String meteringRange)
     {
-        this.mStatusCode = mStatusCode;
-    }
-
-    public String getmStatus()
-    {
-        return mStatus;
-    }
-
-    public void setmStatus(String mStatus)
-    {
-        this.mStatus = mStatus;
+        this.meteringRange = meteringRange;
     }
 }

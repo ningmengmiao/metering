@@ -1,28 +1,28 @@
 package cn.bptop.metering.controller;
 
-import cn.bptop.metering.dao.UserMapper;
-import cn.bptop.metering.pojo.User;
+import com.dingtalk.api.response.OapiUserGetResponse;
 import com.taobao.api.ApiException;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import static cn.bptop.metering.until.Json.getJson;
+import static cn.bptop.metering.until.ding.getDdUser;
 import static cn.bptop.metering.until.ding.getDdUserId;
-import static cn.bptop.metering.until.ding.getUser;
 
 @Controller
 public class UserController
 {
-    @Autowired
-    UserMapper userMapper;
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
-    @RequestMapping("/authCode")
     @ResponseBody
+    @RequestMapping("/metering/authCode")
     public String authCode(String authCode) throws ApiException
     {
-        User user = getUser(getDdUserId(authCode));
-        return getJson(user);
+        OapiUserGetResponse response = getDdUser(getDdUserId(authCode));
+        LOGGER.info(response.getName() + authCode);
+        return getJson(response);
     }
 }

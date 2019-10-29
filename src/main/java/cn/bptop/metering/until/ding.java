@@ -3,14 +3,8 @@ package cn.bptop.metering.until;
 import cn.bptop.metering.pojo.User;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
-import com.dingtalk.api.request.OapiGettokenRequest;
-import com.dingtalk.api.request.OapiMessageCorpconversationAsyncsendV2Request;
-import com.dingtalk.api.request.OapiUserGetRequest;
-import com.dingtalk.api.request.OapiUserGetuserinfoRequest;
-import com.dingtalk.api.response.OapiGettokenResponse;
-import com.dingtalk.api.response.OapiMessageCorpconversationAsyncsendV2Response;
-import com.dingtalk.api.response.OapiUserGetResponse;
-import com.dingtalk.api.response.OapiUserGetuserinfoResponse;
+import com.dingtalk.api.request.*;
+import com.dingtalk.api.response.*;
 import com.mysql.cj.x.json.JsonArray;
 import com.taobao.api.ApiException;
 
@@ -21,7 +15,7 @@ import com.taobao.api.ApiException;
 
 public class ding
 {
-
+    //获取令牌
     public static String getAccess_token() throws ApiException
     {
         DefaultDingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/gettoken");
@@ -41,6 +35,7 @@ public class ding
         request.setCode(authCode);
         request.setHttpMethod("GET");
         OapiUserGetuserinfoResponse response = client.execute(request, getAccess_token());
+        //
         return response.getUserid();
     }
 
@@ -66,8 +61,9 @@ public class ding
         user.setUserId(response.getJobnumber());
         return user;
     }
+
     //发送钉钉消息
-    public static OapiMessageCorpconversationAsyncsendV2Request getMsgRequest(String userid) throws ApiException
+    public static OapiMessageCorpconversationAsyncsendV2Request getMsgRequest(String userid)
     {
         OapiMessageCorpconversationAsyncsendV2Request request = new OapiMessageCorpconversationAsyncsendV2Request();
         request.setUseridList(userid);
@@ -76,7 +72,18 @@ public class ding
         return request;
     }
 
-    public static void sendCardMsg(String userid, String title, String markdown) throws ApiException
+    //    获取部门详情
+    public static OapiDepartmentGetResponse getDepartment(String id) throws ApiException
+    {
+        DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/department/get");
+        OapiDepartmentGetRequest request = new OapiDepartmentGetRequest();
+        request.setId(id);
+        request.setHttpMethod("GET");
+        OapiDepartmentGetResponse response = client.execute(request, getAccess_token());
+        return response;
+    }
+
+    public void sendCardMsg(String userid, String title, String markdown) throws ApiException
     {
         DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/topapi/message/corpconversation/asyncsend_v2");
         OapiMessageCorpconversationAsyncsendV2Request request = getMsgRequest(userid);

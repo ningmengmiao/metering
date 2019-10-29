@@ -9,8 +9,7 @@ import java.util.List;
 
 @Component
 @Mapper
-public interface MeteringMapper
+public interface MeteringRecordMapper
 {
-
-
+    List<Metering> findTool(@Param("userId") String userId);
 }

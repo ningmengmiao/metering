@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "cn.bptop.metering.dao.MeteringRecordMapper">
+	<resultMap id = "mrResultMap" type = "cn.bptop.metering.pojo.MeteringRecord">
+		<id column = "metering_record_id" jdbcType = "INTEGER" property = "meteringRecordId"/>
+		<result column = "metering_id" jdbcType = "INTEGER" property = "meteringId"/>
+		<result column = "unify_id" jdbcType = "VARCHAR" property = "unifyId"/>
+		<result column = "metering_validity" jdbcType = "TIME" property = "meteringValidity"/>
+		<result column = "plant" jdbcType = "VARCHAR" property = "plant"/>
+		<result column = "department" jdbcType = "VARCHAR" property = "department"/>
+		<result column = "userId" jdbcType = "VARCHAR" property = "userId"/>
+		<result column = "dd_name" jdbcType = "VARCHAR" property = "ddName"/>
+		<result column = "manufacturing_id" jdbcType = "VARCHAR" property = "manufacturingId"/>
+		<result column = "metering_status" jdbcType = "INTEGER" property = "meteringStatus"/>
+		<result column = "notes" jdbcType = "VARCHAR" property = "notes"/>
+	</resultMap>
+	<resultMap id = "mResultMap" type = "cn.bptop.metering.pojo.Metering">
+		<id column = "metering_id" jdbcType = "INTEGER" property = "meteringId"/>
+		<result column = "metering_name" jdbcType = "VARCHAR" property = "meteringName"/>
+		<result column = "metering_model" jdbcType = "VARCHAR" property = "meteringModel"/>
+		<result column = "metering_classify" jdbcType = "VARCHAR" property = "meteringClassify"/>
+		<result column = "metering_period" jdbcType = "INTEGER" property = "meteringPeriod"/>
+		<result column = "metering_range" jdbcType = "VARCHAR" property = "meteringRange"/>
+	</resultMap>
+	<resultMap id = "toolResultMap" type = "cn.bptop.metering.pojo.MeteringRecordVO">
+		<association property = "metering" resultMap = "mResultMap"/>
+		<association property = "meteringRecord" resultMap = "mrResultMap"/>
+	</resultMap>
+	<select id = "findTool" resultMap = "toolResultMap">
+		SELECT *
+		FROM metering_record r
+		LEFT JOIN metering m ON r.metering_id = m.metering_id
+		ORDER BY r.metering_status desc , r.metering_validity
+		<where>
+			<if test = "userId != null and userId != ''">
+				userId = #{userId}
+			</if>
+		</where>
+	</select>
+</mapper>
