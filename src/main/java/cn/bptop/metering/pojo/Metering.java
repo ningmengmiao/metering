@@ -7,7 +7,6 @@ public class Metering
     private String meteringModel;
     private String meteringClassify;
     private Integer meteringPeriod;
-    private String meteringRange;
 
     public Integer getMeteringId()
     {
@@ -57,15 +56,5 @@ public class Metering
     public void setMeteringPeriod(Integer meteringPeriod)
     {
         this.meteringPeriod = meteringPeriod;
-    }
-
-    public String getMeteringRange()
-    {
-        return meteringRange;
-    }
-
-    public void setMeteringRange(String meteringRange)
-    {
-        this.meteringRange = meteringRange;
     }
 }

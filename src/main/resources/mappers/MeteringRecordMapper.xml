@@ -5,6 +5,7 @@
 		<id column = "metering_record_id" jdbcType = "INTEGER" property = "meteringRecordId"/>
 		<result column = "metering_id" jdbcType = "INTEGER" property = "meteringId"/>
 		<result column = "unify_id" jdbcType = "VARCHAR" property = "unifyId"/>
+		<result column = "metering_range" jdbcType = "VARCHAR" property = "meteringRange"/>
 		<result column = "metering_validity" jdbcType = "TIME" property = "meteringValidity"/>
 		<result column = "plant" jdbcType = "VARCHAR" property = "plant"/>
 		<result column = "department" jdbcType = "VARCHAR" property = "department"/>
@@ -20,21 +21,50 @@
 		<result column = "metering_model" jdbcType = "VARCHAR" property = "meteringModel"/>
 		<result column = "metering_classify" jdbcType = "VARCHAR" property = "meteringClassify"/>
 		<result column = "metering_period" jdbcType = "INTEGER" property = "meteringPeriod"/>
-		<result column = "metering_range" jdbcType = "VARCHAR" property = "meteringRange"/>
 	</resultMap>
 	<resultMap id = "toolResultMap" type = "cn.bptop.metering.pojo.MeteringRecordVO">
 		<association property = "metering" resultMap = "mResultMap"/>
 		<association property = "meteringRecord" resultMap = "mrResultMap"/>
 	</resultMap>
-	<select id = "findTool" resultMap = "toolResultMap">
+	<insert id = "addRecord">
+		INSERT INTO metering_record
+		values (default,
+		        #{meteringId},
+		        #{unifyId},
+		        #{meteringValidity},
+		        #{meteringRange},
+		        "装调车间",
+		        #{department},
+		        #{userId},
+		        #{ddName},
+		        #{manufacturingId},
+		        2,
+		        #{notes})
+	</insert>
+	<update id = "updateValidity">
+		UPDATE metering_record
+		SET metering_validity = #{meteringValidity}
+		WHERE metering_record_id = #{meteringRecordId}
+	</update>
+	<update id = "updateStatus">
+		UPDATE metering_record
+		SET metering_status = #{meteringStatus}
+		WHERE metering_record_id = #{meteringRecordId}
+	</update>
+	<update id = "updateNotes">
+		UPDATE metering_record
+		SET notes = #{notes}
+		WHERE metering_record_id = #{meteringRecordId}
+	</update>
+	<select id = "findRecord" resultMap = "toolResultMap">
 		SELECT *
 		FROM metering_record r
 		LEFT JOIN metering m ON r.metering_id = m.metering_id
-		ORDER BY r.metering_status desc , r.metering_validity
 		<where>
 			<if test = "userId != null and userId != ''">
-				userId = #{userId}
+				r.userId = #{userId}
 			</if>
 		</where>
+		ORDER BY r.metering_status desc , r.metering_validity;
 	</select>
 </mapper>

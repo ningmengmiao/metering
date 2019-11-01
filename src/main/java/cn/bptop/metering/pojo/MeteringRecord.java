@@ -11,6 +11,17 @@ public class MeteringRecord
     private String department;
     private String userId;
     private String ddName;
+    private String meteringRange;
+
+    public String getMeteringRange()
+    {
+        return meteringRange;
+    }
+
+    public void setMeteringRange(String meteringRange)
+    {
+        this.meteringRange = meteringRange;
+    }
 
     public String getDdName()
     {

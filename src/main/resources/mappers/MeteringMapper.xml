@@ -7,6 +7,21 @@
 		<result column = "metering_model" jdbcType = "VARCHAR" property = "meteringModel"/>
 		<result column = "metering_classify" jdbcType = "VARCHAR" property = "meteringClassify"/>
 		<result column = "metering_period" jdbcType = "INTEGER" property = "meteringPeriod"/>
-		<result column = "metering_range" jdbcType = "VARCHAR" property = "meteringRange"/>
+
 	</resultMap>
+	<select id = "findMeteringName" resultMap = "BaseResultMap">
+		SELECT DISTINCT metering_name
+		FROM metering
+	</select>
+	<select id = "findMeteringModel" resultMap = "BaseResultMap">
+		SELECT metering_model
+		FROM metering
+		WHERE metering_name = #{meteringName}
+	</select>
+	<select id = "findMetering" resultMap = "BaseResultMap">
+		SELECT *
+		FROM metering
+		WHERE metering_name = #{meteringName}
+		  AND metering_model = #{meteringModel}
+	</select>
 </mapper>
