@@ -13,6 +13,6 @@
 	<select id = "findUser" resultMap = "BaseResultMap">
 		SELECT *
 		FROM `dd_user`
-		WHERE dd_name = #{ddName}
+		WHERE userId = #{userId}
 	</select>
 </mapper>

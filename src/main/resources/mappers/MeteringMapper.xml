@@ -23,5 +23,6 @@
 		FROM metering
 		WHERE metering_name = #{meteringName}
 		  AND metering_model = #{meteringModel}
+
 	</select>
 </mapper>

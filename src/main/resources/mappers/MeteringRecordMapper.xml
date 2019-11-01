@@ -64,7 +64,13 @@
 			<if test = "userId != null and userId != ''">
 				r.userId = #{userId}
 			</if>
+
 		</where>
 		ORDER BY r.metering_status desc , r.metering_validity;
+	</select>
+	<select id = "findRecordByStatus" resultMap = "mrResultMap">
+		SELECT *
+		FROM metering_record
+		WHERE metering_status = #{meteringStatus}
 	</select>
 </mapper>

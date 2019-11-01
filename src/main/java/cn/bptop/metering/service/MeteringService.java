@@ -2,19 +2,15 @@ package cn.bptop.metering.service;
 
 
 import cn.bptop.metering.dao.MeteringMapper;
-import cn.bptop.metering.pojo.Metering;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class MeteringService
 {
     @Autowired
     MeteringMapper meteringMapper;
-
-
+//质检 385870218
 
 //    @Autowired
 //    MeteringMapper meteringMapper;

@@ -1,6 +1,7 @@
 package cn.bptop.metering.dao;
 
 import cn.bptop.metering.pojo.Metering;
+import cn.bptop.metering.pojo.MeteringRecord;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -20,4 +21,6 @@ public interface MeteringRecordMapper
     void updateStatus(@Param("meteringStatus") String meteringStatus, @Param("meteringRecordId") String meteringRecordId);
 
     void updateNotes(@Param("notes") String notes, @Param("meteringRecordId") String meteringRecordId);
+
+    List<MeteringRecord> findRecordByStatus(@Param("meteringStatus") String meteringStatus);
 }

@@ -24,6 +24,7 @@ public class ding
         request.setAppsecret("TKZCtUnpFyaROqHU2Y6n_kfZkU9XjlTNnxt7JNmdFZ0Vjb4qNHj2_QnIpbQNNGn7");
         request.setHttpMethod("GET");
         OapiGettokenResponse response = client.execute(request);
+        System.out.println(response.getAccessToken());
         return response.getAccessToken();
     }
 
@@ -83,7 +84,7 @@ public class ding
         return response;
     }
 
-    public void sendCardMsg(String userid, String title, String markdown) throws ApiException
+    public static void sendCardMsg(String userid, String title, String markdown) throws ApiException
     {
         DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/topapi/message/corpconversation/asyncsend_v2");
         OapiMessageCorpconversationAsyncsendV2Request request = getMsgRequest(userid);
@@ -92,7 +93,7 @@ public class ding
         msg.getActionCard().setTitle(title);
         msg.getActionCard().setMarkdown(markdown);
         msg.getActionCard().setSingleTitle("查看详情");
-        msg.getActionCard().setSingleUrl("eapp:/ /pages/index/index");
+        msg.getActionCard().setSingleUrl("eapp://pages/index/index");
         msg.setMsgtype("action_card");
         request.setHttpMethod("GET");
         request.setMsg(msg);
