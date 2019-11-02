@@ -24,7 +24,6 @@ public class ding
         request.setAppsecret("TKZCtUnpFyaROqHU2Y6n_kfZkU9XjlTNnxt7JNmdFZ0Vjb4qNHj2_QnIpbQNNGn7");
         request.setHttpMethod("GET");
         OapiGettokenResponse response = client.execute(request);
-        System.out.println(response.getAccessToken());
         return response.getAccessToken();
     }
 
