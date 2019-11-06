@@ -1,37 +1,28 @@
 package cn.bptop.metering;
 
-import cn.bptop.metering.until.Tool;
+import cn.bptop.metering.service.EmailServer;
+import cn.bptop.metering.service.MeteringService;
 import com.taobao.api.ApiException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.stereotype.Controller;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.xml.crypto.Data;
-import java.text.Format;
+import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
-import static cn.bptop.metering.until.ding.getAccess_token;
-import static cn.bptop.metering.until.ding.sendCardMsg;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MeteringApplicationTests
 {
-
-    /**
-     *
-     */
+    @Autowired
+    MeteringService meteringService;
+    @Autowired
+    EmailServer emailServer;
 
     @Test
-    public void contextLoads() throws ParseException, ApiException
+    public void contextLoads() throws ParseException, ApiException, IOException
     {
-        System.out.println(getAccess_token());
     }
 }
