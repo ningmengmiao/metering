@@ -108,11 +108,7 @@ public class EmailServer
             messageMultipart.addBodyPart(attachment);
             message.saveChanges();
         }
-        catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-        }
-        catch (MessagingException e)
+        catch (UnsupportedEncodingException | MessagingException e)
         {
             e.printStackTrace();
         }

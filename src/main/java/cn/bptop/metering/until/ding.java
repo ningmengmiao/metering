@@ -5,7 +5,7 @@ import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.*;
 import com.dingtalk.api.response.*;
-import com.mysql.cj.x.json.JsonArray;
+
 import com.taobao.api.ApiException;
 
 /**

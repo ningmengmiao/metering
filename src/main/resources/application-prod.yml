@@ -6,23 +6,6 @@ spring:
     password: root
   thymeleaf:
     cache: false
-  mail:
-    host: smtp.qq.com
-    username: 2358498438@qq.com
-    password: lkvlsmnrdijtdihd
-    default-encoding: utf-8
-    properties:
-      mail:
-        smtp:
-          auth: true
-          socketFactory:
-            class: javax.net.ssl.SSLSocketFactory
-            fallback: false
-            port: 465
-          starttls:
-            enable: true
-            required: true
-      port: 465
 
 
 
