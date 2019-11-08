@@ -78,7 +78,7 @@ public class MeteringController
     public void addRecord(String meteringId, String unifyId, String meteringValidity, String meteringRange, String departmentId, String userId, String ddName, String manufacturingId, String notes) throws ApiException
     {
         String department = getDepartment(departmentId).getName();
-        meteringRecordMapper.addRecord(meteringId, unifyId, meteringValidity, meteringRange, department, userId, ddName, manufacturingId, notes);
+        meteringRecordMapper.addRecord(meteringId, unifyId, meteringValidity, meteringRange, department, userId, ddName, manufacturingId, "2", notes);
     }
 
     @ResponseBody

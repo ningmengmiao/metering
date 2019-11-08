@@ -37,8 +37,7 @@
 		        #{department},
 		        #{userId},
 		        #{ddName},
-		        #{manufacturingId},
-		        2,
+		        #{manufacturingId}, #{meteringStatus},
 		        #{notes})
 	</insert>
 	<update id = "updateValidity">

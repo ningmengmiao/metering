@@ -101,7 +101,29 @@ public class MeteringService
             dataRow.createCell(10).setCellValue(alist.getMeteringRecord().getDdName());
             dataRow.createCell(11).setCellValue(alist.getMeteringRecord().getDepartment());
             dataRow.createCell(12).setCellValue(alist.getMeteringRecord().getManufacturingId());
-            dataRow.createCell(13).setCellValue(alist.getMeteringRecord().getMeteringStatus());
+            String meteringStatus = "";
+            switch (alist.getMeteringRecord().getMeteringStatus())
+            {
+                case "0":
+                    meteringStatus = "已报废";
+                    break;
+                case "1":
+                    meteringStatus = "封存";
+                    break;
+                case "2":
+                    meteringStatus = "在用";
+                    break;
+                case "3":
+                    meteringStatus = "在用";
+                    break;
+                case "4":
+                    meteringStatus = "已送检";
+                    break;
+                case "5":
+                    meteringStatus = "已过期";
+                    break;
+            }
+            dataRow.createCell(13).setCellValue(meteringStatus);
             dataRow.createCell(14).setCellValue("林裕明");
             dataRow.createCell(15).setCellValue(alist.getMeteringRecord().getNotes());
         }

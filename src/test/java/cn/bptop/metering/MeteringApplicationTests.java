@@ -2,6 +2,7 @@ package cn.bptop.metering;
 
 import cn.bptop.metering.service.EmailServer;
 import cn.bptop.metering.service.MeteringService;
+import cn.bptop.metering.until.importExcel;
 import com.taobao.api.ApiException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,9 +21,12 @@ public class MeteringApplicationTests
     MeteringService meteringService;
     @Autowired
     EmailServer emailServer;
+    @Autowired
+    importExcel importExcel;
 
     @Test
     public void contextLoads() throws ParseException, ApiException, IOException
     {
+        importExcel.importExcel();
     }
 }

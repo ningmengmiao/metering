@@ -14,7 +14,7 @@ public interface MeteringRecordMapper
 {
     List<MeteringRecordVO> findRecord(@Param("userId") String userId);
 
-    void addRecord(@Param("meteringId") String meteringId, @Param("unifyId") String unifyId, @Param("meteringValidity") String meteringValidity, @Param("meteringRange") String meteringRange, @Param("department") String department, @Param("userId") String userId, @Param("ddName") String ddName, @Param("manufacturingId") String manufacturingId, @Param("notes") String notes);
+    void addRecord(@Param("meteringId") String meteringId, @Param("unifyId") String unifyId, @Param("meteringValidity") String meteringValidity, @Param("meteringRange") String meteringRange, @Param("department") String department, @Param("userId") String userId, @Param("ddName") String ddName, @Param("manufacturingId") String manufacturingId, @Param("meteringStatus") String meteringStatus, @Param("notes") String notes);
 
     void updateValidity(@Param("meteringValidity") String meteringValidity, @Param("meteringRecordId") String meteringRecordId);
 

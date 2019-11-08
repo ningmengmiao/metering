@@ -5,14 +5,15 @@ public class MeteringRecord
     private Integer meteringRecordId;
     private Integer meteringId;
     private String unifyId;
-
     private String meteringValidity;
     private String plant;
     private String department;
     private String userId;
     private String ddName;
     private String meteringRange;
-
+    private String manufacturingId;
+    private String meteringStatus;
+    private String notes;
     public String getMeteringRange()
     {
         return meteringRange;
@@ -32,9 +33,6 @@ public class MeteringRecord
     {
         this.ddName = ddName;
     }
-
-    private String manufacturingId;
-    private String meteringStatus;
 
     public Integer getMeteringRecordId()
     {
@@ -135,6 +133,4 @@ public class MeteringRecord
     {
         this.notes = notes;
     }
-
-    private String notes;
 }
