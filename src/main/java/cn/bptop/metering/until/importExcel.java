@@ -8,7 +8,7 @@ import cn.bptop.metering.pojo.User;
 import com.taobao.api.ApiException;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Row;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,8 +17,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import static cn.bptop.metering.until.ding.getDdUser;
-import static cn.bptop.metering.until.ding.getDepartment;
+import static cn.bptop.metering.until.Ding.getDdUser;
+import static cn.bptop.metering.until.Ding.getDepartment;
 
 @Component
 public class importExcel
@@ -41,23 +41,20 @@ public class importExcel
             for ( int i = 0; i < 3; i++ )
             {
                 HSSFSheet sheetAt = workbook.getSheetAt(i);
-                for ( Row row : sheetAt )
+                System.out.println(sheetAt.getLastRowNum());
+                for ( int j = 2; j < sheetAt.getLastRowNum(); j++ )
                 {
-                    if (row.getRowNum() == 0 || row.getRowNum() == 1)
-                    {
-                        continue;
-                    }
-                    String meteringName = row.getCell(1).getStringCellValue();
-                    String unifyId = row.getCell(2).getStringCellValue();
-                    String meteringPeriod = row.getCell(3).getStringCellValue();
-                    String meteringValidity = row.getCell(5).getStringCellValue();
-                    String meteringModel = row.getCell(6).getStringCellValue();
-                    String meteringClassify = row.getCell(7).getStringCellValue();
-                    String meteringRange = row.getCell(8).getStringCellValue();
-                    String ddName = row.getCell(10).getStringCellValue();
-                    String manufacturingId = row.getCell(12).getStringCellValue();
-                    String Status = row.getCell(13).getStringCellValue();
-                    String notes = row.getCell(15).getStringCellValue();
+                    String meteringName = sheetAt.getRow(j).getCell(1).getStringCellValue();
+                    String unifyId = sheetAt.getRow(j).getCell(2).getStringCellValue();
+                    String meteringPeriod = sheetAt.getRow(j).getCell(3).getStringCellValue();
+                    String meteringValidity = sheetAt.getRow(j).getCell(5).getStringCellValue();
+                    String meteringModel = sheetAt.getRow(j).getCell(6).getStringCellValue();
+                    String meteringClassify = sheetAt.getRow(j).getCell(7).getStringCellValue();
+                    String meteringRange = sheetAt.getRow(j).getCell(8).getStringCellValue();
+                    String ddName = sheetAt.getRow(j).getCell(10).getStringCellValue();
+                    String manufacturingId = sheetAt.getRow(j).getCell(12).getStringCellValue();
+                    String Status = sheetAt.getRow(j).getCell(13).getStringCellValue();
+                    String notes = sheetAt.getRow(j).getCell(15).getStringCellValue();
                     String meteringId = meteringMapper.findMetering(meteringName, meteringModel).get(0).getMeteringId().toString();
                     User user = userMapper.findUser("", ddName);
                     System.out.println(user.getUserId());

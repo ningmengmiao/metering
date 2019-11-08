@@ -13,7 +13,7 @@ import com.taobao.api.ApiException;
  * 获取令牌及用户信息
  */
 
-public class ding
+public class Ding
 {
     //获取令牌
     public static String getAccess_token() throws ApiException

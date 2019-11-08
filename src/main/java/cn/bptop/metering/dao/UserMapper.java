@@ -12,4 +12,6 @@ public interface UserMapper
     void addUser(@Param("userId") String userId, @Param("ddUserId") String ddUserId, @Param("ddName") String ddName);
 
     User findUser(@Param("userId") String userId, @Param("ddName") String ddName);
+
+    void deleteUser();
 }

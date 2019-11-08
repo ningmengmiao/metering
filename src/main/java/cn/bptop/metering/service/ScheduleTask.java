@@ -19,7 +19,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static cn.bptop.metering.until.ding.sendCardMsg;
+import static cn.bptop.metering.until.Ding.sendCardMsg;
 
 /**
  * 定时任务
@@ -44,6 +44,7 @@ public class ScheduleTask
     //    定时修改记录状态
     @Async
     @Scheduled(cron = "0 0 14 * * ?")
+//    @Scheduled(cron = "0,20,40 * * * * ?")
     public void cronUpdate() throws ParseException, ApiException
     {
         Date date30;

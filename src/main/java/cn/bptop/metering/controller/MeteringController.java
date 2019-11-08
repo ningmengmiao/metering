@@ -18,7 +18,7 @@ import java.util.List;
 
 import static cn.bptop.metering.until.FileTool.deleteFile;
 import static cn.bptop.metering.until.Json.getJson;
-import static cn.bptop.metering.until.ding.getDepartment;
+import static cn.bptop.metering.until.Ding.getDepartment;
 
 @Controller
 public class MeteringController

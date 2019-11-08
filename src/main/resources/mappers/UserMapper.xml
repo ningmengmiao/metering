@@ -22,4 +22,8 @@
 			</if>
 		</where>
 	</select>
+	<delete id = "deleteUser">
+		DELETE
+		FROM dd_user
+	</delete>
 </mapper>

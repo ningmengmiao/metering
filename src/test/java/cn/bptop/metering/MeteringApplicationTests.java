@@ -3,6 +3,7 @@ package cn.bptop.metering;
 import cn.bptop.metering.service.EmailServer;
 import cn.bptop.metering.service.MeteringService;
 import cn.bptop.metering.until.importExcel;
+import cn.bptop.metering.until.updateUser;
 import com.taobao.api.ApiException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,10 +24,13 @@ public class MeteringApplicationTests
     EmailServer emailServer;
     @Autowired
     importExcel importExcel;
+    @Autowired
+    updateUser updateUser;
 
     @Test
     public void contextLoads() throws ParseException, ApiException, IOException
     {
-        importExcel.importExcel();
+//        importExcel.importExcel();
+//        updateUser.updateUser();
     }
 }
