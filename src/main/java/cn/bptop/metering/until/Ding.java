@@ -5,7 +5,6 @@ import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.*;
 import com.dingtalk.api.response.*;
-
 import com.taobao.api.ApiException;
 
 /**
@@ -83,7 +82,7 @@ public class Ding
         return response;
     }
 
-    public static void sendCardMsg(String userid, String title, String markdown) throws ApiException
+    public static void sendCardMsg(String userid, String title, String markdown, String url) throws ApiException
     {
         DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/topapi/message/corpconversation/asyncsend_v2");
         OapiMessageCorpconversationAsyncsendV2Request request = getMsgRequest(userid);
@@ -92,7 +91,7 @@ public class Ding
         msg.getActionCard().setTitle(title);
         msg.getActionCard().setMarkdown(markdown);
         msg.getActionCard().setSingleTitle("查看详情");
-        msg.getActionCard().setSingleUrl("eapp://pages/index/index");
+        msg.getActionCard().setSingleUrl(url);
         msg.setMsgtype("action_card");
         request.setHttpMethod("GET");
         request.setMsg(msg);

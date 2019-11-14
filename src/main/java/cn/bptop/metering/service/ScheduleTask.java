@@ -5,6 +5,10 @@ import cn.bptop.metering.dao.MeteringRecordMapper;
 import cn.bptop.metering.dao.UserMapper;
 import cn.bptop.metering.pojo.MeteringRecord;
 import cn.bptop.metering.until.Tool;
+import com.dingtalk.api.DefaultDingTalkClient;
+import com.dingtalk.api.DingTalkClient;
+import com.dingtalk.api.request.OapiRoleSimplelistRequest;
+import com.dingtalk.api.response.OapiRoleSimplelistResponse;
 import com.taobao.api.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -19,6 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static cn.bptop.metering.until.Ding.getAccess_token;
 import static cn.bptop.metering.until.Ding.sendCardMsg;
 
 /**
@@ -72,29 +77,36 @@ public class ScheduleTask
             {
                 meteringRecordMapper.updateStatus("5", aList.getMeteringRecordId().toString());
                 sendCardMsg(userMapper.findUser(aList.getUserId(), "", "").getDdUserid(), "计量工具", "您的计量工具:  \n **" + aList.getUnifyId() + "**  \n 有效期至" + aList.getMeteringValidity() +
-                        "  \n 已过有效期，请停止使用！及时送检！");
+                        "  \n 已过有效期，请停止使用！及时送检！", "eapp://pages/index/index");
             }
         }
     }
 
     //定时发送通知消息
     @Async
-    @Scheduled(cron = "0 0 10 ? * 1,4")
+    @Scheduled(cron = "0 0 10 ? * 1,3")
 //    @Scheduled(cron = "0,20,40 * * * * ?")
     public void cronSend() throws ApiException
     {
-        List<MeteringRecord> list = meteringRecordMapper.findRecordByStatus("5");
-        for ( MeteringRecord aList : list )
+        List<MeteringRecord> list5 = meteringRecordMapper.findRecordByStatus("5");
+        for ( MeteringRecord aList : list5 )
         {
             sendCardMsg(userMapper.findUser(aList.getUserId(), "", "").getDdUserid(), "计量工具", "您的计量工具:  \n **" + aList.getUnifyId() + "**  \n 有效期至" + aList.getMeteringValidity() +
-                    "  \n 已过有效期，请停止使用！及时送检！");
+                    "  \n 已过有效期，请停止使用！及时送检！", "eapp://pages/index/index");
         }
-
-        list = meteringRecordMapper.findRecordByStatus("4");
-        for ( MeteringRecord aList : list )
+        List<MeteringRecord> list4 = meteringRecordMapper.findRecordByStatus("4");
+        for ( MeteringRecord aList : list4 )
         {
             sendCardMsg(userMapper.findUser(aList.getUserId(), "", "").getDdUserid(), "计量工具", "您的计量工具:  \n **" + aList.getUnifyId() + "**  \n 有效期至" + aList.getMeteringValidity() +
-                    "  \n 即将到期，请及时送检！");
+                    "  \n 即将到期，请及时送检！", "eapp://pages/index/index");
+        }
+        DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/topapi/role/simplelist");
+        OapiRoleSimplelistRequest request = new OapiRoleSimplelistRequest();
+        request.setRoleId(385870218L);
+        OapiRoleSimplelistResponse response = client.execute(request, getAccess_token());
+        for ( OapiRoleSimplelistResponse.OpenEmpSimple aList : response.getResult().getList() )
+        {
+            sendCardMsg(aList.getUserid(), "计量工具", "有" + list5.size() + "件计量工具已过有效期  \n 有" + list4.size() + "件计量工具即将过期", "eapp://pages/all/all");
         }
     }
 }

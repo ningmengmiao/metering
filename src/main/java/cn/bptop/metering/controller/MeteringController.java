@@ -146,7 +146,7 @@ public class MeteringController
         List<MeteringRecordVO> record = meteringRecordMapper.findRecord("", meteringRecordId);
         User user = userMapper.findUser("", makeOverUserId, "");
         meteringRecordMapper.makeOver(makeOverUser, user.getUserId(), department, meteringRecordId);
-        sendCardMsg(makeOverUserId, "计量工具转让通知", record.get(0).getMeteringRecord().getDdName() + "将计量工具 **" + record.get(0).getMetering().getMeteringName() + "-" + record.get(0).getMeteringRecord().getUnifyId() + "** 的所有权移交给您，请查验。");
+        sendCardMsg(makeOverUserId, "计量工具转让通知", record.get(0).getMeteringRecord().getDdName() + "将计量工具 **" + record.get(0).getMetering().getMeteringName() + "-" + record.get(0).getMeteringRecord().getUnifyId() + "** 的所有权移交给您，请查验。", "eapp://pages/index/index");
     }
 
     @ResponseBody
