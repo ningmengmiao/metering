@@ -32,7 +32,7 @@ public class MeteringService
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HHmmsszz");
         String file = "C:/file/装调车间计量工具台账" + sdf.format(getUrlDate()) + ".xls";
         FileOutputStream out = new FileOutputStream(new File(file));
-        List<MeteringRecordVO> list = meteringRecordMapper.findRecord("");
+        List<MeteringRecordVO> list = meteringRecordMapper.findRecord("", "");
         HSSFWorkbook wb = new HSSFWorkbook();
         HSSFCellStyle style = wb.createCellStyle();
         style.setBorderBottom(BorderStyle.THIN);//下边框

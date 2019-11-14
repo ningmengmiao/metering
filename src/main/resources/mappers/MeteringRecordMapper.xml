@@ -70,6 +70,9 @@
 			<if test = "userId != null and userId != ''">
 				r.userId = #{userId}
 			</if>
+			<if test = "meteringRecordId != null and meteringRecordId != ''">
+				and r.metering_record_id = #{meteringRecordId}
+			</if>
 
 		</where>
 		ORDER BY r.metering_status desc , r.metering_validity;

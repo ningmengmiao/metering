@@ -4,6 +4,7 @@ import cn.bptop.metering.dao.MeteringMapper;
 import cn.bptop.metering.dao.MeteringRecordMapper;
 import cn.bptop.metering.dao.UserMapper;
 import cn.bptop.metering.pojo.Metering;
+import cn.bptop.metering.pojo.MeteringRecordVO;
 import cn.bptop.metering.pojo.User;
 import cn.bptop.metering.service.EmailServer;
 import cn.bptop.metering.service.MeteringService;
@@ -26,6 +27,7 @@ import java.util.List;
 
 import static cn.bptop.metering.until.Ding.getAccess_token;
 import static cn.bptop.metering.until.Ding.getDepartment;
+import static cn.bptop.metering.until.Ding.sendCardMsg;
 import static cn.bptop.metering.until.FileTool.deleteFile;
 import static cn.bptop.metering.until.Json.getJson;
 
@@ -48,7 +50,7 @@ public class MeteringController
     @RequestMapping("/metering/findRecord")
     public String findTool(String userId)
     {
-        return getJson(meteringRecordMapper.findRecord(userId));
+        return getJson(meteringRecordMapper.findRecord(userId, ""));
     }
 
     @ResponseBody
@@ -139,10 +141,12 @@ public class MeteringController
 
     @ResponseBody
     @RequestMapping("/metering/makeOver")
-    public void makeOver(String makeOverUser, String makeOverUserId, String department, String meteringRecordId)
+    public void makeOver(String makeOverUser, String makeOverUserId, String department, String meteringRecordId) throws ApiException
     {
+        List<MeteringRecordVO> record = meteringRecordMapper.findRecord("", meteringRecordId);
         User user = userMapper.findUser("", makeOverUserId, "");
         meteringRecordMapper.makeOver(makeOverUser, user.getUserId(), department, meteringRecordId);
+        sendCardMsg(makeOverUserId, "计量工具转让通知", record.get(0).getMeteringRecord().getDdName() + "将计量工具 **" + record.get(0).getMetering().getMeteringName() + "-" + record.get(0).getMeteringRecord().getUnifyId() + "** 的所有权移交给您，请查验。");
     }
 
     @ResponseBody

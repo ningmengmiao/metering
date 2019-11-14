@@ -13,7 +13,7 @@ import java.util.List;
 public interface MeteringRecordMapper
 {
     //以工号查工具记录
-    List<MeteringRecordVO> findRecord(@Param("userId") String userId);
+    List<MeteringRecordVO> findRecord(@Param("userId") String userId, @Param("meteringRecordId") String meteringRecordId);
 
     //添加记录
     void addRecord(@Param("meteringId") String meteringId, @Param("unifyId") String unifyId, @Param("meteringTestTime") String meteringTestTime, @Param("meteringValidity") String meteringValidity, @Param("meteringRange") String meteringRange, @Param("department") String department, @Param("userId") String userId, @Param("ddName") String ddName, @Param("manufacturingId") String manufacturingId, @Param("meteringStatus") String meteringStatus, @Param("notes") String notes, @Param("meteringLog") String meteringLog);
