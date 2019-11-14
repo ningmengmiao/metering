@@ -71,7 +71,7 @@ public class ScheduleTask
             if (validity.before(urlDate))
             {
                 meteringRecordMapper.updateStatus("5", aList.getMeteringRecordId().toString());
-                sendCardMsg(userMapper.findUser(aList.getUserId(), "").getDdUserid(), "计量工具", "您的计量工具:  \n **" + aList.getUnifyId() + "**  \n 有效期至" + aList.getMeteringValidity() +
+                sendCardMsg(userMapper.findUser(aList.getUserId(), "", "").getDdUserid(), "计量工具", "您的计量工具:  \n **" + aList.getUnifyId() + "**  \n 有效期至" + aList.getMeteringValidity() +
                         "  \n 已过有效期，请停止使用！及时送检！");
             }
         }
@@ -86,14 +86,14 @@ public class ScheduleTask
         List<MeteringRecord> list = meteringRecordMapper.findRecordByStatus("5");
         for ( MeteringRecord aList : list )
         {
-            sendCardMsg(userMapper.findUser(aList.getUserId(), "").getDdUserid(), "计量工具", "您的计量工具:  \n **" + aList.getUnifyId() + "**  \n 有效期至" + aList.getMeteringValidity() +
+            sendCardMsg(userMapper.findUser(aList.getUserId(), "", "").getDdUserid(), "计量工具", "您的计量工具:  \n **" + aList.getUnifyId() + "**  \n 有效期至" + aList.getMeteringValidity() +
                     "  \n 已过有效期，请停止使用！及时送检！");
         }
 
         list = meteringRecordMapper.findRecordByStatus("4");
         for ( MeteringRecord aList : list )
         {
-            sendCardMsg(userMapper.findUser(aList.getUserId(), "").getDdUserid(), "计量工具", "您的计量工具:  \n **" + aList.getUnifyId() + "**  \n 有效期至" + aList.getMeteringValidity() +
+            sendCardMsg(userMapper.findUser(aList.getUserId(), "", "").getDdUserid(), "计量工具", "您的计量工具:  \n **" + aList.getUnifyId() + "**  \n 有效期至" + aList.getMeteringValidity() +
                     "  \n 即将到期，请及时送检！");
         }
     }

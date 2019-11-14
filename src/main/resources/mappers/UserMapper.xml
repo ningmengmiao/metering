@@ -20,6 +20,9 @@
 			<if test = "ddName != null and ddName != ''">
 				and dd_name= #{ddName}
 			</if>
+			<if test = "ddUserId != null and ddUserId != ''">
+				and dd_userid= #{ddUserId}
+			</if>
 		</where>
 	</select>
 	<delete id = "deleteUser">

@@ -7,6 +7,7 @@
 		<result column = "unify_id" jdbcType = "VARCHAR" property = "unifyId"/>
 		<result column = "metering_range" jdbcType = "VARCHAR" property = "meteringRange"/>
 		<result column = "metering_validity" jdbcType = "TIME" property = "meteringValidity"/>
+		<result column = "metering_test_time" jdbcType = "TIME" property = "meteringTestTime"/>
 		<result column = "plant" jdbcType = "VARCHAR" property = "plant"/>
 		<result column = "department" jdbcType = "VARCHAR" property = "department"/>
 		<result column = "userId" jdbcType = "VARCHAR" property = "userId"/>
@@ -14,6 +15,7 @@
 		<result column = "manufacturing_id" jdbcType = "VARCHAR" property = "manufacturingId"/>
 		<result column = "metering_status" jdbcType = "INTEGER" property = "meteringStatus"/>
 		<result column = "notes" jdbcType = "VARCHAR" property = "notes"/>
+		<result column = "metering_log" jdbcType = "VARCHAR" property = "meteringLog"/>
 	</resultMap>
 	<resultMap id = "mResultMap" type = "cn.bptop.metering.pojo.Metering">
 		<id column = "metering_id" jdbcType = "INTEGER" property = "meteringId"/>
@@ -29,16 +31,13 @@
 	<insert id = "addRecord">
 		INSERT INTO metering_record
 		values (default,
-		        #{meteringId},
-		        #{unifyId},
+		        #{meteringId}, #{unifyId}, #{meteringTestTime},
 		        #{meteringValidity},
 		        #{meteringRange},
 		        "装调车间",
 		        #{department},
 		        #{userId},
-		        #{ddName},
-		        #{manufacturingId}, #{meteringStatus},
-		        #{notes})
+		        #{ddName}, #{manufacturingId}, #{meteringStatus}, #{notes}, #{meteringLog})
 	</insert>
 	<update id = "updateValidity">
 		UPDATE metering_record
@@ -53,6 +52,14 @@
 	<update id = "updateNotes">
 		UPDATE metering_record
 		SET notes = #{notes}
+		WHERE metering_record_id = #{meteringRecordId}
+	</update>
+	<update id = "makeOver">
+		UPDATE metering_record
+		SET metering_record_id = #{meteringRecordId},
+		    userId             = #{makeOverUserId},
+		    dd_name            = #{makeOverUser},
+		    department         = #{department}
 		WHERE metering_record_id = #{meteringRecordId}
 	</update>
 	<select id = "findRecord" resultMap = "toolResultMap">

@@ -19,18 +19,25 @@ import java.util.Properties;
 @Service
 public class EmailServer
 {
+
+    static
+    {
+        System.setProperty("mail.mime.splitlongparameters", "false");
+    }
     // 发件人的 邮箱 和 密码
-    public static String SEND_EMAIL_ACCOUNT = "2358498438@qq.com";
-    public static String SEND_EMAIL_PASSWORD = "ljn12345.";
+    public static String SEND_EMAIL_ACCOUNT = "jzzt@ztcj2019.onaliyun.com";
+    public static String SEND_EMAIL_PASSWORD = "ztcj2020.";
+
 
     // 发件人邮箱的 SMTP 服务器地址, 必须准确, 不同邮件服务器地址不同
     //在公司中进行开发时，需要与业务或项目经理确认smtp的服务器地址，
     // 公司邮箱的smtp地址与我们常用的邮箱smtp地址可能完全不同
-    public static String SMTP_HOST = "smtp.qq.com";
+    public static String SMTP_HOST = "smtp.mxhichina.com";
     //邮箱的smtp服务器端口,这里是开启ssl加密后的smtp服务器端口号
     public static String SMTP_PORT = "465";
     //开通smtp服务时有的邮箱会有授权码
-    public static String AUTHORIZATION_CODE = "lkvlsmnrdijtdihd";
+    public static String AUTHORIZATION_CODE = "";
+//    lkvlsmnrdijtdihd
 
     //在配置properties时使用到以下变量，固定不可变。
     public static String MAIL_TRANSPORT_PROTOCAL = "mail.transport.protocol";
@@ -44,6 +51,7 @@ public class EmailServer
         Properties properties = getProperties();
         //获取session，这里的session是javax包中的，注意不要导错包
         Session session = getSession(properties);
+
         //这里是设置要做为附件发送的文件的路径
         String inputFilePath = filePath;
         //创建邮件信息
@@ -84,10 +92,12 @@ public class EmailServer
         try
         {
             //设置发件人邮箱地址、名称、编码格式
-            message.setFrom(new InternetAddress(SEND_EMAIL_ACCOUNT, SEND_EMAIL_ACCOUNT.substring(0, SEND_EMAIL_ACCOUNT.indexOf("@")), "utf-8"));
+            // message.setFrom(new InternetAddress(SEND_EMAIL_ACCOUNT, SEND_EMAIL_ACCOUNT.substring(0, SEND_EMAIL_ACCOUNT.indexOf("@")), "utf-8"));
+            message.setFrom(new InternetAddress(SEND_EMAIL_ACCOUNT, "装调车间智能平台服务邮箱", "utf-8"));
+
             //设置收件人邮箱地址、名称、编码格式，可设置多个收件人邮箱
             message.setRecipients(MimeMessage.RecipientType.TO, new InternetAddress[]{new InternetAddress(to, "", "utf-8")});
-            message.setSubject("邮件主题");
+            message.setSubject("装调车间计量工具管理台账");
             message.setSentDate(new Date());
             MimeMultipart messageMultipart = new MimeMultipart("mixed");
             message.setContent(messageMultipart);

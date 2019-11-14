@@ -14,6 +14,30 @@ public class MeteringRecord
     private String manufacturingId;
     private String meteringStatus;
     private String notes;
+    private String meteringTestTime;
+    private String meteringLog;
+
+    public String getMeteringTestTime()
+    {
+        return meteringTestTime;
+    }
+
+    public void setMeteringTestTime(String meteringTestTime)
+    {
+        this.meteringTestTime = meteringTestTime;
+    }
+
+    public String getMeteringLog()
+    {
+        return meteringLog;
+    }
+
+    public void setMeteringLog(String meteringLog)
+    {
+        this.meteringLog = meteringLog;
+    }
+
+
     public String getMeteringRange()
     {
         return meteringRange;

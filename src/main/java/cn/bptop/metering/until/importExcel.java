@@ -56,7 +56,7 @@ public class importExcel
                     String Status = sheetAt.getRow(j).getCell(13).getStringCellValue();
                     String notes = sheetAt.getRow(j).getCell(15).getStringCellValue();
                     String meteringId = meteringMapper.findMetering(meteringName, meteringModel).get(0).getMeteringId().toString();
-                    User user = userMapper.findUser("", ddName);
+                    User user = userMapper.findUser("", "", ddName);
                     System.out.println(user.getUserId());
                     String department = getDepartment(getDdUser(user.getDdUserid()).getDepartment().get(0).toString()).getName();
                     String userId = user.getUserId();
@@ -82,7 +82,7 @@ public class importExcel
                             meteringStatus = "5";
                             break;
                     }
-                    meteringRecordMapper.addRecord(meteringId, unifyId, meteringValidity, meteringRange, department, userId, ddName, manufacturingId, meteringStatus, notes);
+                    meteringRecordMapper.addRecord(meteringId, unifyId, "", meteringValidity, meteringRange, department, userId, ddName, manufacturingId, meteringStatus, notes, "");
                     System.out.println("插入" + meteringId + unifyId + meteringValidity + meteringRange + department + userId + ddName + manufacturingId + meteringStatus + notes);
                 }
             }

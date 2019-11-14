@@ -124,7 +124,7 @@ public class MeteringService
                     break;
             }
             dataRow.createCell(13).setCellValue(meteringStatus);
-            dataRow.createCell(14).setCellValue("林裕明");
+            dataRow.createCell(14).setCellValue("林峪名");
             dataRow.createCell(15).setCellValue(alist.getMeteringRecord().getNotes());
         }
 //

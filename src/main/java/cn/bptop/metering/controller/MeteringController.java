@@ -2,9 +2,17 @@ package cn.bptop.metering.controller;
 
 import cn.bptop.metering.dao.MeteringMapper;
 import cn.bptop.metering.dao.MeteringRecordMapper;
+import cn.bptop.metering.dao.UserMapper;
 import cn.bptop.metering.pojo.Metering;
+import cn.bptop.metering.pojo.User;
 import cn.bptop.metering.service.EmailServer;
 import cn.bptop.metering.service.MeteringService;
+import com.dingtalk.api.DefaultDingTalkClient;
+import com.dingtalk.api.DingTalkClient;
+import com.dingtalk.api.request.OapiDepartmentListRequest;
+import com.dingtalk.api.request.OapiUserSimplelistRequest;
+import com.dingtalk.api.response.OapiDepartmentListResponse;
+import com.dingtalk.api.response.OapiUserSimplelistResponse;
 import com.taobao.api.ApiException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +24,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.IOException;
 import java.util.List;
 
+import static cn.bptop.metering.until.Ding.getAccess_token;
+import static cn.bptop.metering.until.Ding.getDepartment;
 import static cn.bptop.metering.until.FileTool.deleteFile;
 import static cn.bptop.metering.until.Json.getJson;
-import static cn.bptop.metering.until.Ding.getDepartment;
 
 @Controller
 public class MeteringController
@@ -32,6 +41,8 @@ public class MeteringController
     MeteringService meteringService;
     @Autowired
     EmailServer emailServer;
+    @Autowired
+    UserMapper userMapper;
 
     @ResponseBody
     @RequestMapping("/metering/findRecord")
@@ -78,7 +89,7 @@ public class MeteringController
     public void addRecord(String meteringId, String unifyId, String meteringValidity, String meteringRange, String departmentId, String userId, String ddName, String manufacturingId, String notes) throws ApiException
     {
         String department = getDepartment(departmentId).getName();
-        meteringRecordMapper.addRecord(meteringId, unifyId, meteringValidity, meteringRange, department, userId, ddName, manufacturingId, "2", notes);
+        meteringRecordMapper.addRecord(meteringId, unifyId, "", meteringValidity, meteringRange, department, userId, ddName, manufacturingId, "2", notes, "");
     }
 
     @ResponseBody
@@ -100,6 +111,38 @@ public class MeteringController
     public void updateNotes(String notes, String meteringRecordId)
     {
         meteringRecordMapper.updateNotes(notes, meteringRecordId);
+    }
+
+    @ResponseBody
+    @RequestMapping("/metering/getDepartments")
+    public String getDepartments() throws ApiException
+    {
+        DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/department/list");
+        OapiDepartmentListRequest request = new OapiDepartmentListRequest();
+        request.setId("1");
+        request.setHttpMethod("GET");
+        OapiDepartmentListResponse response = client.execute(request, getAccess_token());
+        return getJson(response.getDepartment());
+    }
+
+    @ResponseBody
+    @RequestMapping("/metering/getUserList")
+    public String getUserList(String department) throws ApiException
+    {
+        DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/user/simplelist");
+        OapiUserSimplelistRequest request = new OapiUserSimplelistRequest();
+        request.setDepartmentId(Long.valueOf(department));
+        request.setHttpMethod("GET");
+        OapiUserSimplelistResponse response = client.execute(request, getAccess_token());
+        return getJson(response);
+    }
+
+    @ResponseBody
+    @RequestMapping("/metering/makeOver")
+    public void makeOver(String makeOverUser, String makeOverUserId, String department, String meteringRecordId)
+    {
+        User user = userMapper.findUser("", makeOverUserId, "");
+        meteringRecordMapper.makeOver(makeOverUser, user.getUserId(), department, meteringRecordId);
     }
 
     @ResponseBody
