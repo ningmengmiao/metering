@@ -16,8 +16,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import static cn.bptop.metering.until.Json.getJson;
 import static cn.bptop.metering.until.Tool.getUrlDate;
 
 @Service
@@ -92,7 +96,7 @@ public class MeteringService
             dataRow.createCell(1).setCellValue(alist.getMetering().getMeteringName());
             dataRow.createCell(2).setCellValue(alist.getMeteringRecord().getUnifyId());
             dataRow.createCell(3).setCellValue(alist.getMetering().getMeteringPeriod());
-            dataRow.createCell(4).setCellValue(alist.getMeteringRecord().getMeteringValidity());
+            dataRow.createCell(4).setCellValue(alist.getMeteringRecord().getMeteringTestTime());
             dataRow.createCell(5).setCellValue(alist.getMeteringRecord().getMeteringValidity());
             dataRow.createCell(6).setCellValue(alist.getMetering().getMeteringModel());
             dataRow.createCell(7).setCellValue(alist.getMetering().getMeteringClassify());
@@ -154,6 +158,21 @@ public class MeteringService
         wb.write(out);
         out.close();
         return file;
+    }
+
+    public List search(String str, List list)
+    {
+        List results = new ArrayList();
+        Pattern pattern = Pattern.compile(str, Pattern.CASE_INSENSITIVE);
+        for ( Object aList : list )
+        {
+            Matcher matcher = pattern.matcher(getJson(aList));
+            if (matcher.find())
+            {
+                results.add(aList);
+            }
+        }
+        return results;
     }
 }
 

@@ -82,4 +82,21 @@
 		FROM metering_record
 		WHERE metering_status = #{meteringStatus}
 	</select>
+	<select id = "filtrateRecord" resultMap = "toolResultMap">
+		SELECT *
+		FROM metering_record r
+		LEFT JOIN metering m ON r.metering_id = m.metering_id
+		<where>
+			<if test = "meteringName != null and meteringName != ''">
+				m.metering_name = #{meteringName}
+			</if>
+			<if test = "department != null and department != ''">
+				and r.department = #{department}
+			</if>
+			<if test = "meteringStatus != null and meteringStatus != ''">
+				and r.metering_status = #{meteringStatus}
+			</if>
+		</where>
+		ORDER BY r.metering_status desc , r.metering_validity;
+	</select>
 </mapper>

@@ -48,14 +48,14 @@ public class MeteringController
 
     @ResponseBody
     @RequestMapping("/metering/findRecord")
-    public String findTool(String userId)
+    public String findTool(String userId, String meteringRecordId)
     {
-        return getJson(meteringRecordMapper.findRecord(userId, ""));
+        return getJson(meteringRecordMapper.findRecord(userId, meteringRecordId));
     }
 
     @ResponseBody
-    @RequestMapping("/metering/findMeteringName")
-    public String findMeteringName()
+    @RequestMapping("/metering/findMeteringNameArray")
+    public String findMeteringNameArray()
     {
         List<Metering> meteringList = meteringMapper.findMeteringName();
         String[] meteringArray = new String[meteringList.size()];
@@ -64,6 +64,14 @@ public class MeteringController
             meteringArray[i] = meteringList.get(i).getMeteringName();
         }
         return getJson(meteringArray);
+    }
+
+    @ResponseBody
+    @RequestMapping("/metering/findMeteringName")
+    public String findMeteringName()
+    {
+        List<Metering> meteringList = meteringMapper.findMeteringName();
+        return getJson(meteringList);
     }
 
     @ResponseBody
@@ -116,6 +124,13 @@ public class MeteringController
     }
 
     @ResponseBody
+    @RequestMapping("/metering/filtrateRecord")
+    public String filtrateMetering(String meteringName, String department, String meteringStatus)
+    {
+        List<MeteringRecordVO> list = meteringRecordMapper.filtrateRecord(meteringName, department, meteringStatus);
+        return getJson(list);
+    }
+    @ResponseBody
     @RequestMapping("/metering/getDepartments")
     public String getDepartments() throws ApiException
     {
@@ -147,6 +162,15 @@ public class MeteringController
         User user = userMapper.findUser("", makeOverUserId, "");
         meteringRecordMapper.makeOver(makeOverUser, user.getUserId(), department, meteringRecordId);
         sendCardMsg(makeOverUserId, "计量工具转让通知", record.get(0).getMeteringRecord().getDdName() + "将计量工具 **" + record.get(0).getMetering().getMeteringName() + "-" + record.get(0).getMeteringRecord().getUnifyId() + "** 的所有权移交给您，请查验。", "eapp://pages/index/index");
+    }
+
+    @ResponseBody
+    @RequestMapping("/metering/searchRecord")
+    public String searchRecord(String str)
+    {
+        List<MeteringRecordVO> record = meteringRecordMapper.findRecord("", "");
+        List search = meteringService.search(str, record);
+        return getJson(search);
     }
 
     @ResponseBody

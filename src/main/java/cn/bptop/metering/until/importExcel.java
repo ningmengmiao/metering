@@ -8,14 +8,16 @@ import cn.bptop.metering.pojo.User;
 import com.taobao.api.ApiException;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import static cn.bptop.metering.until.Ding.getDdUser;
 import static cn.bptop.metering.until.Ding.getDepartment;
@@ -38,16 +40,19 @@ public class importExcel
         {
             InputStream inputStream = new FileInputStream("/C:/Users/Administrator/Desktop/装调车间计量工具台账.xls");
             HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             for ( int i = 0; i < 3; i++ )
             {
                 HSSFSheet sheetAt = workbook.getSheetAt(i);
                 System.out.println(sheetAt.getLastRowNum());
-                for ( int j = 2; j < sheetAt.getLastRowNum(); j++ )
+                for ( int j = 2; j <= sheetAt.getLastRowNum(); j++ )
                 {
                     String meteringName = sheetAt.getRow(j).getCell(1).getStringCellValue();
                     String unifyId = sheetAt.getRow(j).getCell(2).getStringCellValue();
                     String meteringPeriod = sheetAt.getRow(j).getCell(3).getStringCellValue();
-                    String meteringValidity = sheetAt.getRow(j).getCell(5).getStringCellValue();
+                    Date date = sheetAt.getRow(j).getCell(5).getDateCellValue();
+
+
                     String meteringModel = sheetAt.getRow(j).getCell(6).getStringCellValue();
                     String meteringClassify = sheetAt.getRow(j).getCell(7).getStringCellValue();
                     String meteringRange = sheetAt.getRow(j).getCell(8).getStringCellValue();
@@ -82,7 +87,12 @@ public class importExcel
                             meteringStatus = "5";
                             break;
                     }
-                    meteringRecordMapper.addRecord(meteringId, unifyId, "", meteringValidity, meteringRange, department, userId, ddName, manufacturingId, meteringStatus, notes, "");
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.add(Calendar.YEAR, -1);
+                    String meteringValidity = simpleDateFormat.format(date);
+                    String meteringTestTime = simpleDateFormat.format(calendar.getTime());
+                    meteringRecordMapper.addRecord(meteringId, unifyId, meteringTestTime, meteringValidity, meteringRange, department, userId, ddName, manufacturingId, meteringStatus, notes, "");
                     System.out.println("插入" + meteringId + unifyId + meteringValidity + meteringRange + department + userId + ddName + manufacturingId + meteringStatus + notes);
                 }
             }
