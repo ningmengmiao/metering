@@ -30,6 +30,8 @@ public interface MeteringRecordMapper
     //更新备注
     void updateNotes(@Param("notes") String notes, @Param("meteringRecordId") String meteringRecordId);
 
+    void addLog(@Param("meteringRecordId") String meteringRecordId, @Param("log") String log);
+
     //以状态查记录
     List<MeteringRecord> findRecordByStatus(@Param("meteringStatus") String meteringStatus);
 

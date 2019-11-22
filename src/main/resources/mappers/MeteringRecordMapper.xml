@@ -39,6 +39,11 @@
 		        #{userId},
 		        #{ddName}, #{manufacturingId}, #{meteringStatus}, #{notes}, #{meteringLog})
 	</insert>
+	<update id = "addLog">
+		UPDATE metering_record
+		SET metering_log = concat(metering_log, #{log})
+		WHERE metering_record_id = #{meteringRecordId}
+	</update>
 	<update id = "updateValidity">
 		UPDATE metering_record
 		SET metering_validity = #{meteringValidity}

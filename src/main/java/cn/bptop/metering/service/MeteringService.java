@@ -76,7 +76,9 @@ public class MeteringService
         //4.遍历数据,创建数据行
         for ( MeteringRecordVO alist : list )
         {
+
             int i = 0;
+
             switch (alist.getMetering().getMeteringClassify())
             {
                 case "A":
@@ -92,6 +94,7 @@ public class MeteringService
             //获取最后一行的行号
             int lastRowNum = sheet[i].getLastRowNum();
             HSSFRow dataRow = sheet[i].createRow(lastRowNum + 1);
+            System.out.println(lastRowNum);
             dataRow.createCell(0).setCellValue(lastRowNum);
             dataRow.createCell(1).setCellValue(alist.getMetering().getMeteringName());
             dataRow.createCell(2).setCellValue(alist.getMeteringRecord().getUnifyId());
@@ -173,6 +176,15 @@ public class MeteringService
             }
         }
         return results;
+    }
+
+    public void addLog(String meteringRecordId, String str)
+    {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String date = format.format(getUrlDate());
+        String log = date + "--" + str + " \\n";
+        meteringRecordMapper.addLog(meteringRecordId, log);
+        System.out.println(log);
     }
 }
 

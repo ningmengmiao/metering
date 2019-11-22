@@ -48,7 +48,7 @@ public class ScheduleTask
 
     //    定时修改记录状态
     @Async
-    @Scheduled(cron = "0 0 14 * * ?")
+    @Scheduled(cron = "0 30 7 * * ?")
 //    @Scheduled(cron = "0,20,40 * * * * ?")
     public void cronUpdate() throws ParseException, ApiException
     {
@@ -84,7 +84,7 @@ public class ScheduleTask
 
     //定时发送通知消息
     @Async
-    @Scheduled(cron = "0 0 10 ? * 1,3")
+    @Scheduled(cron = "0 0 8 ? * 1,3")
 //    @Scheduled(cron = "0,20,40 * * * * ?")
     public void cronSend() throws ApiException
     {

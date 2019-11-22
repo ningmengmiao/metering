@@ -23,13 +23,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
-import static cn.bptop.metering.until.Ding.getAccess_token;
-import static cn.bptop.metering.until.Ding.getDepartment;
-import static cn.bptop.metering.until.Ding.sendCardMsg;
+import static cn.bptop.metering.until.Ding.*;
 import static cn.bptop.metering.until.FileTool.deleteFile;
 import static cn.bptop.metering.until.Json.getJson;
+import static cn.bptop.metering.until.Tool.getUrlDate;
 
 @Controller
 public class MeteringController
@@ -96,31 +99,41 @@ public class MeteringController
 
     @ResponseBody
     @RequestMapping("/metering/addRecord")
-    public void addRecord(String meteringId, String unifyId, String meteringValidity, String meteringRange, String departmentId, String userId, String ddName, String manufacturingId, String notes) throws ApiException
+    public void addRecord(String meteringId, String unifyId, String meteringValidity, String meteringRange, String departmentId, String userId, String ddName, String manufacturingId, String notes) throws ApiException, ParseException
     {
         String department = getDepartment(departmentId).getName();
-        meteringRecordMapper.addRecord(meteringId, unifyId, "", meteringValidity, meteringRange, department, userId, ddName, manufacturingId, "2", notes, "");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String date = format.format(getUrlDate());
+        Date validity = format.parse(meteringValidity);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(validity);
+        calendar.add(Calendar.YEAR, -1);
+        meteringRecordMapper.addRecord(meteringId, unifyId, format.format(calendar.getTime()), meteringValidity, meteringRange, department, userId, ddName, manufacturingId, "2", notes, date + "--[" + ddName + "]添加新工具 \\n");
+
     }
 
     @ResponseBody
     @RequestMapping("/metering/updateValidity")
-    public void updateValidity(String meteringValidity, String meteringRecordId)
+    public void updateValidity(String meteringValidity, String meteringRecordId, String log)
     {
         meteringRecordMapper.updateValidity(meteringValidity, meteringRecordId);
+        meteringService.addLog(meteringRecordId, log);
     }
 
     @ResponseBody
     @RequestMapping("/metering/updateStatus")
-    public void updateStatus(String meteringStatus, String meteringRecordId)
+    public void updateStatus(String meteringStatus, String meteringRecordId, String log)
     {
         meteringRecordMapper.updateStatus(meteringStatus, meteringRecordId);
+        meteringService.addLog(meteringRecordId, log);
     }
 
     @ResponseBody
     @RequestMapping("/metering/updateNotes")
-    public void updateNotes(String notes, String meteringRecordId)
+    public void updateNotes(String notes, String meteringRecordId, String log)
     {
         meteringRecordMapper.updateNotes(notes, meteringRecordId);
+        meteringService.addLog(meteringRecordId, log);
     }
 
     @ResponseBody
@@ -156,11 +169,12 @@ public class MeteringController
 
     @ResponseBody
     @RequestMapping("/metering/makeOver")
-    public void makeOver(String makeOverUser, String makeOverUserId, String department, String meteringRecordId) throws ApiException
+    public void makeOver(String makeOverUser, String makeOverUserId, String department, String meteringRecordId, String log) throws ApiException
     {
         List<MeteringRecordVO> record = meteringRecordMapper.findRecord("", meteringRecordId);
         User user = userMapper.findUser("", makeOverUserId, "");
         meteringRecordMapper.makeOver(makeOverUser, user.getUserId(), department, meteringRecordId);
+        meteringService.addLog(meteringRecordId, log);
         sendCardMsg(makeOverUserId, "计量工具转让通知", record.get(0).getMeteringRecord().getDdName() + "将计量工具 **" + record.get(0).getMetering().getMeteringName() + "-" + record.get(0).getMeteringRecord().getUnifyId() + "** 的所有权移交给您，请查验。", "eapp://pages/index/index");
     }
 

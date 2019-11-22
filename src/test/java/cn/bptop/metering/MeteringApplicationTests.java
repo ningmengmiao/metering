@@ -1,5 +1,6 @@
 package cn.bptop.metering;
 
+import cn.bptop.metering.dao.MeteringRecordMapper;
 import cn.bptop.metering.service.EmailServer;
 import cn.bptop.metering.service.MeteringService;
 import cn.bptop.metering.until.importExcel;
@@ -21,6 +22,8 @@ public class MeteringApplicationTests
     @Autowired
     MeteringService meteringService;
     @Autowired
+    MeteringRecordMapper meteringRecordMapper;
+    @Autowired
     EmailServer emailServer;
     @Autowired
     importExcel importExcel;
@@ -32,5 +35,15 @@ public class MeteringApplicationTests
     {
 //        importExcel.importExcel();
 //        updateUser.updateUser();
+//        List<MeteringRecordVO> record = meteringRecordMapper.findRecord("", "");
+//        for ( int i = 0; i <record.size() ; i++ )
+//        {
+//            if(!record.get(i).getMeteringRecord().getNotes().equals("")){
+//                System.out.println(record.get(i).getMeteringRecord().getMeteringRecordId());
+//                meteringService.addLog(String.valueOf(record.get(i).getMeteringRecord().getMeteringRecordId()), record.get(i).getMeteringRecord().getNotes());
+//
+//            }
+//
+//        }
     }
 }
